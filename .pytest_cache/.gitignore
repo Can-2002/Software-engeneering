@@ -1,0 +1,19 @@
+# Create# Python Cache
+__pycache__/
+*.pyc
+
+# pytest
+.pytest_cache/
+
+# VS Code
+.vscode/
+
+# Daten (optional)
+data/
+
+# Logs
+*.log
+
+# OS Dateien
+.DS_Stored
+
