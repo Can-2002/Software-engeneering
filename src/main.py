@@ -1,4 +1,9 @@
-from dataloader.loader import load_data
+from dataloader.loader import einlesen_daten
 
-data = load_data("data/Testdaten1.csv")
-print(data.columns)
+def daten_laden():
+    genutzte_csv = "/workspaces/Software-engeneering/data/Testdaten2.csv"
+    df = einlese_daten(genutzte_csv)
+    print(df.head())
+
+if __name__ == "__main__":
+    daten_laden()
