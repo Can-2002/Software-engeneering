@@ -26,9 +26,12 @@ def main():
 
     df_datengefiltert = filter_data(df_datenBereinigt)
 
-    df_trinangulation = triangulation(df_datengefiltert)
-    
-    map_print = map_erstellen(df_datengefiltert)
+    df_router_pos = triangulation(df_datengefiltert)
+
+    print(df_router_pos.shape)
+    print(df_datengefiltert.shape)
+    #map_print = map_erstellen(df_datengefiltert, df_router_pos)
+    #python -m http.server 8000
 
 
 # Hauptprogramm: Führt die main-Funktion aus, wenn das Skript direkt ausgeführt wird

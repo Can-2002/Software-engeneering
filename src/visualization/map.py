@@ -3,7 +3,7 @@ import pandas as pd
 import webbrowser
 
 
-def map_erstellen(df_datengefiltert):
+def map_erstellen(df_datengefiltert,df_router_pos ):
     """Erzeugt eine interaktive Karte aus gefilterten GPS-Daten."""
 
     # Punkte extrahieren (Latitude, Longitude)
@@ -35,6 +35,18 @@ def map_erstellen(df_datengefiltert):
                 popup=f'RSSI {row["rssi"]}'
         ).add_to(messpunkte)
     messpunkte.add_to(m)
+
+    routerpositionen = folium.FeatureGroup(name="Router (geschätzt)", show=True)
+    for index, row in df_router_pos.iterrows():
+        folium.CircleMarker(
+            location=[row["lat"], row["lon"]],
+            radius=4,
+                color="blue",
+                fill=True,
+                popup=f'mac {row["mac"]}'
+        ).add_to(routerpositionen)
+    routerpositionen.add_to(m)
+        
 
 
     folium.LayerControl(collapsed=False).add_to(m)
