@@ -1,16 +1,28 @@
-import folium 
+import folium
 import pandas as pd
 import webbrowser
+
+
 def map_erstellen(df_datengefiltert):
+    """Erzeugt eine interaktive Karte aus gefilterten GPS-Daten."""
 
-    weg_punkte = df_datengefiltert[['lat', 'lon']].values.tolist()
+    # Punkte extrahieren (Latitude, Longitude)
+    weg_punkte = df_datengefiltert[["lat", "lon"]].values.tolist()
 
-    m = folium.Map(location= [df_datengefiltert["lat"].mean(), df_datengefiltert["lon"].mean()], zoom_start=19, tiles="CartoDB positron")
+    # Basis-Karte zentrieren auf Durchschnitt der Koordinaten
+    m = folium.Map(
+        location=[df_datengefiltert["lat"].mean(), df_datengefiltert["lon"].mean()],
+        zoom_start=19,
+        tiles="CartoDB positron"
+    )
 
+    # Start- und Endmarker einfügen
     folium.Marker(weg_punkte[0], popup="Start", icon=folium.Icon(color="green")).add_to(m)
+    folium.Marker(weg_punkte[-1], popup="Ende", icon=folium.Icon(color="red")).add_to(m)
 
+    # Linienverbindung aller Wegepunkte darstellen
     gelaufener_weg = folium.FeatureGroup(name="Pfad/Linie", show=True)
-    folium.PolyLine(weg_punkte, color ="blue", weight = 4, opacity =0.7).add_to(gelaufener_weg)
+    folium.PolyLine(weg_punkte, color="blue", weight=4, opacity=0.7).add_to(gelaufener_weg)
     gelaufener_weg.add_to(m)
 
     messpunkte = folium.FeatureGroup(name="Messpunkte", show=True)
@@ -51,15 +63,6 @@ def map_erstellen(df_datengefiltert):
 
     # 4. Das CSS in das HTML-Dokument der Karte einfügen
     m.get_root().header.add_child(folium.Element(custom_css))
-
-
-
-
-
-
-
-
-
 
 
 

@@ -6,6 +6,14 @@ from dataloader.loader import einlese_daten  # Funktion zum Laden der Daten
 from processing.cleaning import datenbereinigung  # Funktion zur Datenbereinigung
 from processing.filtering import filter_data
 from visualization.map import map_erstellen
+from processing.triangulation import triangulation
+
+
+def hello():
+    """Einfache Funktion für Unit-Testing, gibt einen Begrüßungstext zurück."""
+    return "Hello World"
+
+
 def main():
     # Pfad zur CSV-Datei mit den Testdaten
     genutzte_csv = "/workspaces/Software-engeneering/data/Testdaten1.csv"
@@ -17,6 +25,8 @@ def main():
     df_datenBereinigt = datenbereinigung(df_rohdaten)
 
     df_datengefiltert = filter_data(df_datenBereinigt)
+
+    df_trinangulation = triangulation(df_datengefiltert)
     
     map_print = map_erstellen(df_datengefiltert)
 
