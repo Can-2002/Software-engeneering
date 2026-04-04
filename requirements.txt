@@ -1,3 +1,6 @@
+# Datei: requirements.txt
+# Zweck: Paketliste oder Konfiguration
+
 numpy
 pandas
 matplotlib

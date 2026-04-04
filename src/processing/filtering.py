@@ -1,6 +1,11 @@
+# Datei: filtering.py
+# Zweck: Python Modul
+
+# Imports für dieses Modul
 import pandas as pd  # pandas wird für DataFrame-Verarbeitung verwendet
 
 
+# Funktion filter_data
 def filter_data(df_datenBereinigt):
     """Filtert den DataFrame so, dass nur MAC-Adressen mit mindestens 3 Messpunkten erhalten bleiben."""
     # Zähle, wie oft jede MAC-Adresse vorkommt

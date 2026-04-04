@@ -2,54 +2,56 @@ import pandas as pd
 import numpy as np
 
 
-def rssi_to_distance(rssi, tx_power=-45, n=3):
+def rssi_zu_distanz(rssi, tx_power=-45, n=3.0):
     """
-    Wandelt RSSI in eine grobe Distanz (Meter) um
+    Wandelt RSSI grob in eine Distanz um.
+    tx_power = geschätzter RSSI bei 1 Meter
+    n = Path-Loss-Exponent (Outdoor oft ca. 2.5 bis 3.5)
     """
     return 10 ** ((tx_power - rssi) / (10 * n))
 
 
-def estimate_router_position(df_router):
+def triangulation(df_datengefiltert):
     """
-    Schätzt die Position eines einzelnen Routers
-    """
-
-    # RSSI -> Distanz
-    distances = df_router["rssi"].apply(rssi_to_distance)
-
-    # Gewicht berechnen (starke Signale wichtiger)
-    weights = 1 / (distances + 1e-6)
-
-    # gewichteter Mittelwert
-    lat = np.average(df_router["lat"], weights=weights)
-    lon = np.average(df_router["lon"], weights=weights)
-
-    return lat, lon
-
-
-def triangulation(df):
-    """
-    Berechnet die Position aller Router
+    Schätzt Routerpositionen auf Basis der Messpunkte.
+    Berechnung pro MAC, Anzeige später nach SSID.
     """
 
-    router_positions = []
+    benoetigte_spalten = ["mac", "ssid", "lat", "lon", "rssi"]
+    df = df_datengefiltert[benoetigte_spalten].copy()
 
-    # nach MAC gruppieren
-    grouped = df.groupby("mac")
+    # Nur sinnvolle Zeilen behalten
+    df = df.dropna(subset=["mac", "lat", "lon", "rssi"])
 
-    for mac, group in grouped:
+    router_liste = []
 
-        # nur verwenden wenn genug Messpunkte
-        if len(group) < 5:
+    for mac, gruppe in df.groupby("mac"):
+        if len(gruppe) < 3:
             continue
 
-        lat, lon = estimate_router_position(group)
+        gruppe = gruppe.copy()
 
-        router_positions.append({
+        # Distanz aus RSSI schätzen
+        gruppe["distanz"] = gruppe["rssi"].apply(rssi_zu_distanz)
+
+        # Gewicht: je kleiner die Distanz, desto höher das Gewicht
+        gruppe["gewicht"] = 1 / (gruppe["distanz"] + 1e-6)
+
+        # Geschätzte Position als gewichteter Mittelwert
+        lat_router = np.average(gruppe["lat"], weights=gruppe["gewicht"])
+        lon_router = np.average(gruppe["lon"], weights=gruppe["gewicht"])
+
+        # Häufigste SSID dieser MAC
+        ssid_router = gruppe["ssid"].mode().iloc[0] if gruppe["ssid"].notna().any() else "Unbekannt"
+
+        router_liste.append({
             "mac": mac,
-            "lat": lat,
-            "lon": lon,
-            "messungen": len(group)
+            "ssid": ssid_router,
+            "router_lat": lat_router,
+            "router_lon": lon_router,
+            "messpunkte": len(gruppe),
+            "mittleres_rssi": gruppe["rssi"].mean()
         })
 
-    return pd.DataFrame(router_positions)
+    df_router_pos = pd.DataFrame(router_liste)
+    return df_router_pos

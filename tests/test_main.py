@@ -1,5 +1,9 @@
+# Datei: test_main.py
+# Zweck: Python Modul
+
 # Dieses Modul enthält Tests für die Hauptfunktionen.
 
+# Imports für dieses Modul
 import sys  # Import für Systemfunktionen
 import os   # Import für Betriebssystemfunktionen
 
@@ -10,6 +14,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "s
 from main import hello
 
 
+# Funktion test_hello
 def test_hello():
     # Überprüft, ob hello() den erwarteten Text liefert
     assert hello() == "Hello World"

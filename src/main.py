@@ -1,3 +1,6 @@
+# Datei: main.py
+# Zweck: Python Modul
+
 # Dieses Skript lädt Daten aus einer CSV-Datei, bereinigt sie und zeigt die ersten Zeilen an.
 # Es dient als Haupteinstiegspunkt für die Datenverarbeitung.
 
@@ -9,11 +12,13 @@ from visualization.map import map_erstellen
 from processing.triangulation import triangulation
 
 
+# Funktion hello
 def hello():
     """Einfache Funktion für Unit-Testing, gibt einen Begrüßungstext zurück."""
     return "Hello World"
 
 
+# Funktion main
 def main():
     # Pfad zur CSV-Datei mit den Testdaten
     genutzte_csv = "/workspaces/Software-engeneering/data/Testdaten1.csv"
@@ -30,7 +35,7 @@ def main():
 
     print(df_router_pos.shape)
     print(df_datengefiltert.shape)
-    #map_print = map_erstellen(df_datengefiltert, df_router_pos)
+    map_print = map_erstellen(df_datengefiltert, df_router_pos)
     #python -m http.server 8000
 
 

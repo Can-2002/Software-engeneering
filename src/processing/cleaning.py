@@ -1,5 +1,9 @@
+# Datei: cleaning.py
+# Zweck: Python Modul
+
 # Dieses Modul enthält Funktionen zur Datenbereinigung.
 
+# Imports für dieses Modul
 import pandas as pd  # Import der pandas-Bibliothek für Datenverarbeitung
 
 # Hier findet die Datenbereinigung statt
