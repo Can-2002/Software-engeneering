@@ -11,13 +11,6 @@ from processing.filtering import filter_data
 from visualization.map import map_erstellen
 from processing.triangulation import triangulation
 
-
-# Funktion hello
-def hello():
-    """Einfache Funktion für Unit-Testing, gibt einen Begrüßungstext zurück."""
-    return "Hello World"
-
-
 # Funktion main
 def main():
     # Pfad zur CSV-Datei mit den Testdaten
@@ -32,9 +25,7 @@ def main():
     df_datengefiltert = filter_data(df_datenBereinigt)
 
     df_router_pos = triangulation(df_datengefiltert)
-
-    print(df_router_pos.shape)
-    print(df_datengefiltert.shape)
+  
     map_print = map_erstellen(df_datengefiltert, df_router_pos)
     #python -m http.server 8000
 
