@@ -9,6 +9,7 @@ from dataloader.loader import einlese_daten  # Funktion zum Laden der Daten
 from processing.cleaning import datenbereinigung  # Funktion zur Datenbereinigung
 from processing.filtering import filter_data
 from visualization.map import map_erstellen
+from processing.lokalisierung import route_schaetzen
 from processing.triangulation import triangulation
 
 # Funktion main
@@ -25,8 +26,9 @@ def main():
     df_datengefiltert = filter_data(df_datenBereinigt)
 
     df_router_pos = triangulation(df_datengefiltert)
-  
-    map_print = map_erstellen(df_datengefiltert, df_router_pos)
+    df_route_geschaetzt = route_schaetzen(df_datengefiltert, df_router_pos, scan_spalte="timestamp")
+
+    map_print = map_erstellen(df_datengefiltert, df_router_pos, df_route_geschaetzt)
     #python -m http.server 8000
 
 
