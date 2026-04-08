@@ -28,8 +28,11 @@ def main():
     df_router_pos = triangulation(df_datengefiltert)
     df_route_geschaetzt = route_schaetzen(df_datengefiltert, df_router_pos, scan_spalte="timestamp")
 
+    # Erstelle und zeige die interaktive Karte mit allen Daten
     map_print = map_erstellen(df_datengefiltert, df_router_pos, df_route_geschaetzt)
-    #python -m http.server 8000
+    
+    # Hinweis: Um die erstellte HTML-Karte im Browser zu öffnen, starten Sie einen lokalen Server:
+    # python -m http.server 8000
 
 
 # Hauptprogramm: Führt die main-Funktion aus, wenn das Skript direkt ausgeführt wird
