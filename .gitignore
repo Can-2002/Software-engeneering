@@ -14,3 +14,6 @@ __pycache__/
 # OS Dateien
 .DS_Store
 
+.index.html
+
+.mein_gelaufener_weg.html
