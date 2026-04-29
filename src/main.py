@@ -16,7 +16,7 @@ from processing.triangulation import triangulation
 # Funktion main
 def main():
     # Pfad zur CSV-Datei mit den Testdaten
-    genutzte_csv = "/workspaces/Software-engeneering/data/Testdaten1.csv"
+    genutzte_csv = "/workspaces/Software-engeneering/data/Datensatz final.csv"
 
     # Laden der Rohdaten aus der CSV-Datei
     df_rohdaten = einlese_daten(genutzte_csv)
